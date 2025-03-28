@@ -10,4 +10,3 @@ Transition to Main Content:
 [Host's Name]: "Alright, let's jump right in!"
 You can now elaborate on each of the main points mentioned in the agenda. Provide detailed information, examples, visuals, and any other relevant content.
 Recap:
-[Host's Name]: "To quickly recap what we've covered so far:"
