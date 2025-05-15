@@ -139,7 +139,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
     // Load the plugin that provides the "copy" task.
-    grunt.loadNpmTasks('grunt-contrib-copy');
     
     // Load the plugin that provides the "string-replace" task.
     grunt.loadNpmTasks('grunt-string-replace');
