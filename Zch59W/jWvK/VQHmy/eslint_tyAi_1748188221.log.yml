@@ -4,7 +4,6 @@ codecov:
     wait_for_ci: no
 
 coverage:
-  status:
     patch:
       default:
         target: 90%
