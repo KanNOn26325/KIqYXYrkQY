@@ -137,7 +137,6 @@ Snapdex is built around an **offline-first** philosophy. All core data is persis
 - **Repositories** abstract local and remote logic
 - **Domain services** coordinate business operations across sources
 
-### Sync Strategy
 
 - **Best-effort sync** from local to remote when performing create/update/delete operations
 - **Just-in-time full sync** triggered on login or app open
