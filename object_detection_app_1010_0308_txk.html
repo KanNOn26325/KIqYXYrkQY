@@ -1,0 +1,75 @@
+// 代码生成时间: 2025-10-10 03:08:32
+    document.addEventListener("DOMContentLoaded", function() {
+      // Function to load the model
+      async function loadModel() {
+        try {
+          // Load the COCO-SSD model from TensorFlow.js models
+          const model = await cocoSsd.load();
+          return model;
+        } catch (error) {
+          console.error("Error loading model: ", error);
+          throw error;
+        }
+      }
+
+      // Function to detect objects in the video frame
+      async function detectObjects(model) {
+        try {
+          const videoElement = document.getElementById("videoElement");
+          const videoWidth = 640; // Set the video width
+          const videoHeight = 480; // Set the video height
+          videoElement.width = videoWidth;
+          videoElement.height = videoHeight;
+
+          const video = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+          videoElement.srcObject = video;
+
+          setInterval(async () => {
+            const videoFrame = await tf.browser.fromPixels(videoElement);
+            const detectedObjects = await model.detect(videoFrame);
+            drawBoundingBoxes(videoFrame, detectedObjects);
+          }, 1000 / 30);
+        } catch (error) {
+          console.error("Error detecting objects: ", error);
+          throw error;
+        }
+      }
+
+      // Function to draw bounding boxes around detected objects
+      function drawBoundingBoxes(image, detections) {
+        const canvas = document.createElement("canvas");
+        canvas.width = image.shape[1];
+        const ctx = canvas.getContext("2d");
+        const imageData = ctx.createImageData(image.shape[1], image.shape[0]);
+        tf.browser.toPixels(image, imageData.data);
+        ctx.putImageData(imageData, 0, 0);
+
+        detections.forEach((detection) => {
+          const x = detection.bbox[0];
+          const y = detection.bbox[1];
+          const width = detection.bbox[2];
+          const height = detection.bbox[3];
+          ctx.strokeStyle = "red";
+          ctx.lineWidth = 4;
+          ctx.strokeRect(x, y, width, height);
+        });
+
+        document.body.appendChild(canvas);
+      }
+
+      // Main function to initialize the app
+      async function initApp() {
+        try {
+          const model = await loadModel();
+          await detectObjects(model);
+        } catch (error) {
+          console.error("Error initializing app: ", error);
+        }
+      }
+
+      // Initialize the app on DOMContentLoaded event
+      initApp();
+    });
+  </script>
+</body>
+</html>
